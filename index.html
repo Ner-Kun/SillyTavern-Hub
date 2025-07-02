@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SillyTavern Hub - Resource Catalog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0f0f12',
+                            800: '#1a1a1b',
+                            700: '#252529',
+                            600: '#2e2e33',
+                            500: '#3a3a40',
+                        },
+                        accent: '#9b5de5',
+                        'accent-light': '#b388ff'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f0f12;
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .grid-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .download-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
+        }
+        .download-btn:hover::after {
+            transform: rotate(30deg) translate(50%, 50%);
+        }
+        .tag {
+            transition: all 0.2s ease;
+        }
+        .tag:hover {
+            transform: scale(1.05);
+        }
+        .tag.selected {
+            background-color: #9b5de5;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(155, 93, 229, 0.3);
+        }
+        .category-btn.active {
+            background-color: #1a1a1b;
+            border-left: 3px solid #9b5de5;
+        }
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .mobile-menu.open {
+            max-height: 1000px;
+        }
+        .filter-row {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #3a3a40 #1a1a1b;
+        }
+        .filter-row::-webkit-scrollbar {
+            height: 6px;
+        }
+        .filter-row::-webkit-scrollbar-track {
+            background: #1a1a1b;
+        }
+        .filter-row::-webkit-scrollbar-thumb {
+            background-color: #3a3a40;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 min-h-screen flex">
+    <div class="sidebar hidden lg:block lg:w-64 bg-dark-800 p-4 fixed h-full z-20">
+        <div class="flex items-center justify-center mb-8 mt-2">
+            <div class="flex items-center space-x-2">
+                <div class="bg-accent w-10 h-10 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-beer text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-white">SillyTavern Hub</h1>
+            </div>
+        </div>
+        <ul class="space-y-2">
+            <li>
+                <a href="#" class="category-btn active flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-700 transition-colors">
+                    <span class="text-xl mr-3">🎛️</span>
+                    <span>Presets</span>
+                    <span class="ml-auto bg-accent text-xs px-2 py-1 rounded-full">128</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-700 transition-colors">
+                    <span class="text-xl mr-3">⚙️</span>
+                    <span>Utilities</span>
+                    <span class="ml-auto bg-dark-600 text-gray-400 text-xs px-2 py-1 rounded-full">47</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-700 transition-colors">
+                    <span class="text-xl mr-3">📘</span>
+                    <span>Tutorials</span>
+                    <span class="ml-auto bg-dark-600 text-gray-400 text-xs px-2 py-1 rounded-full">62</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-700 transition-colors">
+                    <span class="text-xl mr-3">🧠</span>
+                    <span>LLM Settings</span>
+                    <span class="ml-auto bg-dark-600 text-gray-400 text-xs px-2 py-1 rounded-full">33</span>
+                </a>
+            </li>
+        </ul>
+        <div class="mt-8 p-4 bg-dark-700 rounded-lg">
+            <h3 class="font-semibold text-white mb-3">Resource Categories</h3>
+            <div class="space-y-2">
+                <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                    <span class="text-sm">Official Resources</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                    <span class="text-sm">Community</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
+                    <span class="text-sm">Experimental</span>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4 text-center text-gray-500 text-sm">
+            <p>SillyTavern Hub v1.0.0</p>
+            <p>All resources are community-verified</p>
+        </div>
+    </div>
+
+    <header class="lg:hidden w-full bg-dark-800 p-4 fixed z-10 shadow-lg">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-accent w-8 h-8 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-beer text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold text-white">SillyTavern Hub</h1>
+            </div>
+            <button id="mobileMenuButton" class="text-gray-300">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <div id="mobileMenu" class="mobile-menu mt-4 bg-dark-700 rounded-lg">
+            <ul class="space-y-1 p-2">
+                <li>
+                    <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 bg-dark-600">
+                        <span class="text-xl mr-3">🎛️</span>
+                        <span>Presets</span>
+                        <span class="ml-auto bg-accent text-xs px-2 py-1 rounded-full">128</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-600">
+                        <span class="text-xl mr-3">⚙️</span>
+                        <span>Utilities</span>
+                        <span class="ml-auto bg-dark-500 text-gray-400 text-xs px-2 py-1 rounded-full">47</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-600">
+                        <span class="text-xl mr-3">📘</span>
+                        <span>Tutorials</span>
+                        <span class="ml-auto bg-dark-500 text-gray-400 text-xs px-2 py-1 rounded-full">62</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="category-btn flex items-center p-3 rounded-lg text-gray-200 hover:bg-dark-600">
+                        <span class="text-xl mr-3">🧠</span>
+                        <span>LLM Settings</span>
+                        <span class="ml-auto bg-dark-500 text-gray-400 text-xs px-2 py-1 rounded-full">33</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="flex-1 lg:ml-64 pt-24 lg:pt-4 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="bg-dark-800 rounded-xl p-4 mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="relative flex-1 max-w-2xl">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            placeholder="Search for presets, utilities, tutorials..." 
+                            class="search-input w-full pl-10 pr-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:border-accent focus:ring-1 focus:ring-accent-light transition"
+                        >
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-lg transition flex items-center">
+                            <i class="fas fa-filter mr-2"></i>
+                            <span>Filters</span>
+                        </button>
+                        <button class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-lg transition flex items-center">
+                            <i class="fas fa-sort mr-2"></i>
+                            <span>Sort</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-dark-700">
+                    <div class="filter-row flex pb-2 space-x-3">
+                        <div class="tag bg-accent text-white px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            LLama-3
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Mistral
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Mixtral
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Gemma
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Claude
+                        </div>
+                        <div class="tag bg-green-700 bg-opacity-30 text-green-400 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            SFW
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            NSFW
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Roleplay
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Adventure
+                        </div>
+                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
+                            Storywriting
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6 flex justify-between items-center">
+                <h2 class="text-2xl font-bold">Presets for SillyTavern <span class="text-gray-400 text-xl">(128)</span></h2>
+                <div class="text-gray-400 flex items-center">
+                    <span class="mr-2">Showing 12 of 128</span>
+                    <i class="fas fa-sync-alt cursor-pointer hover:text-accent"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">🎛️</span>
+                        <span class="text-xs bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded">New</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Pygmalion 7B Storytelling Preset</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">AIScholar42</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">Optimized settings for creating deep narrative stories with emotional engagement.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Llama-3</span>
+                        <span class="tag bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded text-xs">Storywriting</span>
+                        <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">🎛️</span>
+                        <span class="text-xs bg-amber-900 bg-opacity-40 text-amber-400 px-2 py-1 rounded">Popular</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Mistral Adventure RP Preset</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">RoleplayMaster</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">The perfect preset for adventure role-playing games with dynamic dialogue and fast responses.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Mistral</span>
+                        <span class="tag bg-amber-900 bg-opacity-40 text-amber-400 px-2 py-1 rounded text-xs">Adventure</span>
+                        <span class="tag bg-rose-900 bg-opacity-40 text-rose-400 px-2 py-1 rounded text-xs">NSFW</span>
+                        <span class="tag bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded text-xs">Roleplay</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">⚙️</span>
+                        <span class="text-xs bg-red-900 bg-opacity-40 text-red-400 px-2 py-1 rounded">Updated</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Character Creator Tool</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">CharDev</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">A tool for quickly creating complex characters with detailed backgrounds and traits.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Utility</span>
+                        <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
+                        <span class="tag bg-cyan-900 bg-opacity-40 text-cyan-400 px-2 py-1 rounded text-xs">Generator</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">📘</span>
+                        <span class="text-xs bg-green-900 bg-opacity-40 text-green-400 px-2 py-1 rounded">Official</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Advanced Prompt Engineering</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">SillyTavern Team</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">A detailed guide on creating effective prompts for different models and use cases.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Tutorial</span>
+                        <span class="tag bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded text-xs">Prompts</span>
+                        <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">🧠</span>
+                        <span class="text-xs bg-violet-900 bg-opacity-40 text-violet-400 px-2 py-1 rounded">Expert</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Gemma 3 Chat Optimization</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">ModelTuner</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">Specialized settings for maximizing Gemma 3 performance in chat mode.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Gemma</span>
+                        <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
+                        <span class="tag bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded text-xs">Chat</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item bg-dark-800 rounded-xl p-5 border border-dark-700 hover:border-accent transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-2xl">🎛️</span>
+                        <span class="text-xs bg-indigo-900 bg-opacity-40 text-indigo-400 px-2 py-1 rounded">Recommended</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Mixtral NSFW Roleplay Pack</h3>
+                    <div class="flex items-center text-gray-400 text-sm mb-3">
+                        <i class="fas fa-user mr-1"></i>
+                        <a href="#" class="hover:text-accent transition">RPDesigner</a>
+                    </div>
+                    <p class="text-gray-300 mb-4">A collection of presets for adult role-playing games with various scenarios and character personalities.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Mixtral</span>
+                        <span class="tag bg-rose-900 bg-opacity-40 text-rose-400 px-2 py-1 rounded text-xs">NSFW</span>
+                        <span class="tag bg-blue-900 bg-opacity-40 text-blue-400 px-2 py-1 rounded text-xs">Roleplay</span>
+                        <span class="tag bg-amber-900 bg-opacity-40 text-amber-400 px-2 py-1 rounded text-xs">Pack</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                            <i class="fas fa-download mr-2"></i>
+                            Import to SillyTavern
+                        </button>
+                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
+                            Details <i class="fas fa-external-link-alt ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-10">
+                <nav class="inline-flex rounded-md">
+                    <a href="#" class="py-2 px-4 bg-dark-800 border border-dark-700 rounded-l-lg hover:bg-dark-700">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="#" class="py-2 px-4 bg-dark-800 border-t border-b border-dark-700 hover:bg-dark-700 text-accent font-bold">1</a>
+                    <a href="#" class="py-2 px-4 bg-dark-800 border-t border-b border-dark-700 hover:bg-dark-700">2</a>
+                    <a href="#" class="py-2 px-4 bg-dark-800 border-t border-b border-dark-700 hover:bg-dark-700">3</a>
+                    <span class="py-2 px-4 bg-dark-800 border-t border-b border-dark-700">...</span>
+                    <a href="#" class="py-2 px-4 bg-dark-800 border-t border-b border-dark-700 hover:bg-dark-700">8</a>
+                    <a href="#" class="py-2 px-4 bg-dark-800 border border-dark-700 rounded-r-lg hover:bg-dark-700">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="lg:ml-64 bg-dark-800 border-t border-dark-700 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="bg-accent w-8 h-8 rounded-lg flex items-center justify-center mr-2">
+                            <i class="fas fa-beer text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">SillyTavern Hub</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-1">A resource catalog for SillyTavern</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-accent transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition">
+                        <i class="fab fa-reddit text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-accent transition">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-dark-700 text-center text-gray-500 text-sm">
+                <p>SillyTavern Hub is not an official product. All resources are provided by the community.</p>
+                <p class="mt-2">© 2025 SillyTavern Hub. All rights are defenseless. We place our hope only on your conscience.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        const tags = document.querySelectorAll('.tag');
+        tags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                tags.forEach(t => t.classList.remove('selected'));
+                tag.classList.add('selected');
+            });
+        });
+        
+        const downloadButtons = document.querySelectorAll('.download-btn');
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const blob = new Blob(['{"example": "This is a sample JSON file"}'], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sillytavern-preset.json';
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.remove('fa-download');
+                    icon.classList.add('fa-check');
+                    
+                    setTimeout(() => {
+                        icon.classList.remove('fa-check');
+                        icon.classList.add('fa-download');
+                    }, 2000);
+                }, 100);
+            });
+        });
+        
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
