@@ -228,7 +228,7 @@
                         </div>
                         <input 
                             type="text" 
-                            placeholder="Search for presets, utilities, tutorials..." 
+                            placeholder="Search for presets, utilities, tutorials, meaning of life..." 
                             class="search-input w-full pl-10 pr-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:border-accent focus:ring-1 focus:ring-accent-light transition"
                         >
                     </div>
@@ -247,16 +247,10 @@
                 <div class="mt-4 pt-4 border-t border-dark-700">
                     <div class="filter-row flex pb-2 space-x-3">
                         <div class="tag bg-accent text-white px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            LLama-3
+                            Gemini
                         </div>
                         <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Mistral
-                        </div>
-                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Mixtral
-                        </div>
-                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Gemma
+                            Deepseek
                         </div>
                         <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
                             Claude
@@ -267,23 +261,14 @@
                         <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
                             NSFW
                         </div>
-                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Roleplay
-                        </div>
-                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Adventure
-                        </div>
-                        <div class="tag bg-dark-700 text-gray-300 hover:bg-dark-600 px-3 py-1 rounded-lg text-sm font-medium cursor-pointer">
-                            Storywriting
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-6 flex justify-between items-center">
-                <h2 class="text-2xl font-bold">Presets for SillyTavern <span class="text-gray-400 text-xl">(12)</span></h2>
+                <h2 class="text-2xl font-bold">Presets for SillyTavern <span class="text-gray-400 text-xl">(2)</span></h2>
                 <div class="text-gray-400 flex items-center">
-                    <span class="mr-2">Showing 12 of 12</span>
+                    <span class="mr-2">Showing 2 of 2</span>
                     <i class="fas fa-sync-alt cursor-pointer hover:text-accent"></i>
                 </div>
             </div>
@@ -307,13 +292,14 @@
                         <span class="tag bg-rose-900 bg-opacity-40 text-rose-400 px-2 py-1 rounded text-xs">NSFW</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
-                            <i class="fas fa-download mr-2"></i>
+                        <button 
+                            data-action="link" 
+                            data-url="https://discord.gg/VAbxVUeV" 
+                            class="download-btn bg-accent ...">
+                            <i class="fas fa-external-link-alt mr-2"></i>
                             Download from Discord
                         </button>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
-                            Details <i class="fas fa-external-link-alt ml-1"></i>
-                        </a>
+                        <a href="#" ...>Details <i class="fas fa-external-link-alt ml-1"></i></a>
                     </div>
                 </div>
 
@@ -330,16 +316,18 @@
                     <p class="text-gray-300 mb-4">Placeholder description, I'm too lazy to write it.</p>
                     <div class="flex flex-wrap gap-2 mb-5">
                         <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Utility</span>
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Gemini</span>
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Deepseek</span>
                         <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
+                        <button 
+                            data-action="import" 
+                            class="download-btn bg-accent ...">
                             <i class="fas fa-download mr-2"></i>
                             Import to SillyTavern
                         </button>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
-                            Details <i class="fas fa-external-link-alt ml-1"></i>
-                        </a>
+                        <a href="#" ...>Details <i class="fas fa-external-link-alt ml-1"></i></a>
                     </div>
                 </div>
 
@@ -359,13 +347,14 @@
                         <span class="tag bg-emerald-900 bg-opacity-40 text-emerald-400 px-2 py-1 rounded text-xs">SFW</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <button class="download-btn bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-light transition flex items-center">
-                            <i class="fas fa-download mr-2"></i>
+                        <button 
+                            data-action="link" 
+                            data-url="https://docs.sillytavern.app/" 
+                            class="download-btn bg-accent ...">
+                            <i class="fas fa-book-open mr-2"></i>
                             Open page
                         </button>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm flex items-center">
-                            Details <i class="fas fa-external-link-alt ml-1"></i>
-                        </a>
+                        <a href="#" ...>Details <i class="fas fa-external-link-alt ml-1"></i></a>
                     </div>
                 </div>
 
@@ -381,7 +370,8 @@
                     </div>
                     <p class="text-gray-300 mb-4">Placeholder description, I'm too lazy to write it.</p>
                     <div class="flex flex-wrap gap-2 mb-5">
-                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Mixtral</span>
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Gemini</span>
+                        <span class="tag bg-purple-900 bg-opacity-40 text-purple-400 px-2 py-1 rounded text-xs">Deepseek</span>
                         <span class="tag bg-rose-900 bg-opacity-40 text-rose-400 px-2 py-1 rounded text-xs">NSFW</span>
                     </div>
                     <div class="flex justify-between items-center">
@@ -451,24 +441,27 @@
     </footer>
 
     <script>
-        const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+    });
+
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            tags.forEach(t => t.classList.remove('selected'));
+            tag.classList.add('selected');
         });
-        
-        const tags = document.querySelectorAll('.tag');
-        tags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                tags.forEach(t => t.classList.remove('selected'));
-                tag.classList.add('selected');
-            });
-        });
-        
-        const downloadButtons = document.querySelectorAll('.download-btn');
-        downloadButtons.forEach(button => {
-            button.addEventListener('click', function() {
+    });
+
+    const actionButtons = document.querySelectorAll('.download-btn');
+
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const action = this.dataset.action;
+
+            if (action === 'import') {
                 const blob = new Blob(['{"example": "This is a sample JSON file"}'], {type: 'application/json'});
                 const url = URL.createObjectURL(blob);
                 
@@ -481,27 +474,34 @@
                 setTimeout(() => {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                    
+
                     const icon = this.querySelector('i');
-                    icon.classList.remove('fa-download');
-                    icon.classList.add('fa-check');
+                    const originalIcon = icon.className;
+                    icon.className = icon.className.replace(/fa-\w+-?\w+?/, 'fa-check');
                     
                     setTimeout(() => {
-                        icon.classList.remove('fa-check');
-                        icon.classList.add('fa-download');
+                        icon.className = originalIcon;
                     }, 2000);
                 }, 100);
-            });
+
+            } else if (action === 'link') {
+                const url = this.dataset.url;
+                if (url) {
+                    window.open(url, '_blank');
+                } else {
+                    console.error('Data-url attribute is missing on the button.');
+                }
+            }
         });
-        
-        const categoryButtons = document.querySelectorAll('.category-btn');
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-            });
+    });
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
         });
+    });
     </script>
 </body>
-</html>
+</html
